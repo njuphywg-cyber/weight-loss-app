@@ -1,0 +1,147 @@
+.checkin-button-card {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 16px;
+  padding: 24px;
+  color: white;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+}
+
+.checkin-button-card h2 {
+  margin: 0 0 20px 0;
+  font-size: 1.5rem;
+  text-align: center;
+}
+
+.checkin-content {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.checkin-info {
+  text-align: center;
+}
+
+.checkin-date {
+  font-size: 1.1rem;
+  margin-bottom: 8px;
+  opacity: 0.95;
+}
+
+.checkin-user {
+  font-size: 0.9rem;
+  opacity: 0.85;
+}
+
+.checked-in-state {
+  text-align: center;
+  padding: 20px;
+}
+
+.check-icon {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  margin: 0 auto 15px;
+  border: 3px solid rgba(255, 255, 255, 0.3);
+}
+
+.checked-text {
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.checked-encourage {
+  font-size: 0.95rem;
+  opacity: 0.9;
+}
+
+.checkin-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.checkin-btn {
+  padding: 12px 24px;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.checkin-btn.primary {
+  background: white;
+  color: #667eea;
+}
+
+.checkin-btn.primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(255, 255, 255, 0.3);
+}
+
+.checkin-btn.secondary {
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+}
+
+.checkin-btn.secondary:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.checkin-btn.cancel {
+  background: transparent;
+  color: white;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+}
+
+.checkin-btn.cancel:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.note-input-section {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.checkin-note-input {
+  width: 100%;
+  padding: 12px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+  font-size: 0.95rem;
+  resize: vertical;
+  font-family: inherit;
+}
+
+.checkin-note-input::placeholder {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.checkin-note-input:focus {
+  outline: none;
+  border-color: rgba(255, 255, 255, 0.5);
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.note-actions {
+  display: flex;
+  gap: 12px;
+}
+
+.note-actions .checkin-btn {
+  flex: 1;
+}

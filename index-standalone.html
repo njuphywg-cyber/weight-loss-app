@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>💪 减肥日志 - 双人版</title>
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="https://unpkg.com/recharts@2.10.3/umd/Recharts.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+                'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+                sans-serif;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+            padding: 20px;
+        }
+
+        .app {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .app-header {
+            text-align: center;
+            color: white;
+            margin-bottom: 30px;
+        }
+
+        .app-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .subtitle {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        .app-content {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        .user-switcher {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .user-button {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 24px;
+            border: 2px solid #e0e0e0;
+            background: white;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+            font-weight: 500;
+        }
+
+        .user-button:hover {
+            border-color: #667eea;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.2);
+        }
+
+        .user-button.active {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-color: #667eea;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .user-icon {
+            font-size: 1.5rem;
+        }
+
+        .main-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-top: 30px;
+        }
+
+        @media (max-width: 968px) {
+            .main-section {
+                grid-template-columns: 1fr;
+            }
+            .app-header h1 {
+                font-size: 2rem;
+            }
+        }
+
+        .left-panel {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .right-panel {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card {
+            background: white;
+            border-radius: 16px;
+            padding: 25px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .weight-form-card {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        }
+
+        .card h2 {
+            margin-bottom: 20px;
+            color: #333;
+            font-size: 1.5rem;
+        }
+
+        .weight-form {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .form-group label {
+            font-weight: 600;
+            color: #555;
+            font-size: 0.95rem;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+            font-family: inherit;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        .submit-button {
+            padding: 14px 24px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+        }
+
+        .submit-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .weight-history-card {
+            max-height: 600px;
+            overflow-y: auto;
+        }
+
+        .weight-history-card h2 {
+            position: sticky;
+            top: 0;
+            background: white;
+            padding-bottom: 10px;
+            z-index: 1;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 40px 20px;
+            color: #999;
+        }
+
+        .history-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .history-item {
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 18px;
+            position: relative;
+            transition: all 0.3s ease;
+            border-left: 4px solid #667eea;
+        }
+
+        .history-item:hover {
+            background: #f0f2f5;
+            transform: translateX(5px);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .history-date {
+            font-size: 0.9rem;
+            color: #666;
+            margin-bottom: 8px;
+        }
+
+        .history-weight {
+            display: flex;
+            align-items: baseline;
+            gap: 8px;
+            margin-bottom: 8px;
+        }
+
+        .weight-value {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #333;
+        }
+
+        .weight-unit {
+            font-size: 1rem;
+            color: #666;
+        }
+
+        .weight-change {
+            font-size: 0.85rem;
+            padding: 4px 8px;
+            border-radius: 6px;
+            font-weight: 600;
+        }
+
+        .weight-change.decrease {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .weight-change.increase {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        .history-note {
+            font-size: 0.9rem;
+            color: #555;
+            margin-top: 8px;
+            padding-top: 8px;
+            border-top: 1px solid #e0e0e0;
+            font-style: italic;
+        }
+
+        .delete-button {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            font-size: 1.2rem;
+            opacity: 0.5;
+            transition: opacity 0.3s ease;
+            padding: 5px;
+        }
+
+        .delete-button:hover {
+            opacity: 1;
+            transform: scale(1.1);
+        }
+
+        .weight-history-card::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .weight-history-card::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+
+        .weight-history-card::-webkit-scrollbar-thumb {
+            background: #888;
+            border-radius: 10px;
+        }
+
+        .weight-history-card::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
+
+        .chart-summary {
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .summary-text {
+            display: inline-block;
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+
+        .summary-text.positive {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .summary-text.negative {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .chart-container {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState, useEffect } = React;
+        const { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } = Recharts;
+
+        // 存储工具
+        const storage = {
+            getWeightEntries() {
+                const data = localStorage.getItem('weight-loss-entries');
+                return data ? JSON.parse(data) : [];
+            },
+            saveWeightEntry(entry) {
+                const entries = this.getWeightEntries();
+                entries.push({ ...entry, id: Date.now().toString() });
+                localStorage.setItem('weight-loss-entries', JSON.stringify(entries));
+            },
+            deleteWeightEntry(id) {
+                const entries = this.getWeightEntries();
+                const filtered = entries.filter(e => e.id !== id);
+                localStorage.setItem('weight-loss-entries', JSON.stringify(filtered));
+            },
+            getUserProfiles() {
+                const data = localStorage.getItem('weight-loss-profiles');
+                if (data) {
+                    return JSON.parse(data);
+                }
+                return [
+                    { id: 'me', name: '我' },
+                    { id: 'girlfriend', name: '女朋友' },
+                ];
+            }
+        };
+
+        // 格式化日期
+        function formatDate(dateString) {
+            const date = new Date(dateString);
+            const year = date.getFullYear();
+            const month = String(date.getMonth() + 1).padStart(2, '0');
+            const day = String(date.getDate()).padStart(2, '0');
+            return `${year}年${month}月${day}日`;
+        }
+
+        function formatDateShort(dateString) {
+            const date = new Date(dateString);
+            const month = String(date.getMonth() + 1).padStart(2, '0');
+            const day = String(date.getDate()).padStart(2, '0');
+            return `${month}/${day}`;
+        }
+
+        function getTodayDate() {
+            const today = new Date();
+            const year = today.getFullYear();
+            const month = String(today.getMonth() + 1).padStart(2, '0');
+            const day = String(today.getDate()).padStart(2, '0');
+            return `${year}-${month}-${day}`;
+        }
+
+        // 用户切换组件
+        function UserSwitcher({ currentUser, profiles, onUserChange }) {
+            return (
+                <div className="user-switcher">
+                    {profiles.map(profile => (
+                        <button
+                            key={profile.id}
+                            className={`user-button ${currentUser === profile.id ? 'active' : ''}`}
+                            onClick={() => onUserChange(profile.id)}
+                        >
+                            <span className="user-icon">{profile.id === 'me' ? '👨' : '👩'}</span>
+                            <span className="user-name">{profile.name}</span>
+                        </button>
+                    ))}
+                </div>
+            );
+        }
+
+        // 体重记录表单
+        function WeightForm({ currentUser, userName, onAdd }) {
+            const [weight, setWeight] = useState('');
+            const [date, setDate] = useState(getTodayDate());
+            const [note, setNote] = useState('');
+
+            const handleSubmit = (e) => {
+                e.preventDefault();
+                if (!weight || !date) return;
+
+                onAdd({
+                    userId: currentUser,
+                    date,
+                    weight: parseFloat(weight),
+                    note: note.trim() || undefined,
+                });
+
+                setWeight('');
+                setNote('');
+                setDate(getTodayDate());
+            };
+
+            return (
+                <div className="card weight-form-card">
+                    <h2>📝 记录体重</h2>
+                    <form onSubmit={handleSubmit} className="weight-form">
+                        <div className="form-group">
+                            <label htmlFor="date">日期</label>
+                            <input
+                                id="date"
+                                type="date"
+                                value={date}
+                                onChange={(e) => setDate(e.target.value)}
+                                required
+                            />
+                        </div>
+                        <div className="form-group">
+                            <label htmlFor="weight">体重 (kg)</label>
+                            <input
+                                id="weight"
+                                type="number"
+                                step="0.1"
+                                min="0"
+                                value={weight}
+                                onChange={(e) => setWeight(e.target.value)}
+                                placeholder="请输入体重"
+                                required
+                            />
+                        </div>
+                        <div className="form-group">
+                            <label htmlFor="note">备注 (可选)</label>
+                            <textarea
+                                id="note"
+                                value={note}
+                                onChange={(e) => setNote(e.target.value)}
+                                placeholder="记录今天的心情、运动或饮食..."
+                                rows={3}
+                            />
+                        </div>
+                        <button type="submit" className="submit-button">
+                            ✨ 保存记录
+                        </button>
+                    </form>
+                </div>
+            );
+        }
+
+        // 历史记录组件
+        function WeightHistory({ entries, onDelete }) {
+            if (entries.length === 0) {
+                return (
+                    <div className="card weight-history-card">
+                        <h2>📊 历史记录</h2>
+                        <div className="empty-state">
+                            <p>还没有记录，开始记录你的第一笔体重吧！</p>
+                        </div>
+                    </div>
+                );
+            }
+
+            const getWeightChange = (index) => {
+                if (index === entries.length - 1) return null;
+                const current = entries[index].weight;
+                const previous = entries[index + 1].weight;
+                return current - previous;
+            };
+
+            return (
+                <div className="card weight-history-card">
+                    <h2>📊 历史记录</h2>
+                    <div className="history-list">
+                        {entries.map((entry, index) => {
+                            const change = getWeightChange(index);
+                            return (
+                                <div key={entry.id} className="history-item">
+                                    <div className="history-date">
+                                        {formatDate(entry.date)}
+                                    </div>
+                                    <div className="history-weight">
+                                        <span className="weight-value">{entry.weight}</span>
+                                        <span className="weight-unit">kg</span>
+                                        {change !== null && (
+                                            <span className={`weight-change ${change < 0 ? 'decrease' : change > 0 ? 'increase' : ''}`}>
+                                                {change > 0 ? '↑' : change < 0 ? '↓' : '→'} {Math.abs(change).toFixed(1)}kg
+                                            </span>
+                                        )}
+                                    </div>
+                                    {entry.note && (
+                                        <div className="history-note">{entry.note}</div>
+                                    )}
+                                    <button
+                                        className="delete-button"
+                                        onClick={() => {
+                                            if (confirm('确定要删除这条记录吗？')) {
+                                                onDelete(entry.id);
+                                            }
+                                        }}
+                                        title="删除记录"
+                                    >
+                                        🗑️
+                                    </button>
+                                </div>
+                            );
+                        })}
+                    </div>
+                </div>
+            );
+        }
+
+        // 图表组件
+        function WeightChart({ entries }) {
+            if (entries.length === 0) {
+                return (
+                    <div className="card">
+                        <h2>📈 体重趋势</h2>
+                        <div className="empty-state">
+                            <p>记录更多数据后，这里会显示体重趋势图</p>
+                        </div>
+                    </div>
+                );
+            }
+
+            const chartData = [...entries]
+                .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime())
+                .map(entry => ({
+                    date: formatDateShort(entry.date),
+                    weight: entry.weight,
+                    fullDate: entry.date,
+                }));
+
+            const latestWeight = entries[0]?.weight;
+            const oldestWeight = entries[entries.length - 1]?.weight;
+            const totalChange = latestWeight && oldestWeight ? latestWeight - oldestWeight : 0;
+
+            return (
+                <div className="card">
+                    <h2>📈 体重趋势</h2>
+                    {totalChange !== 0 && (
+                        <div className="chart-summary">
+                            <span className={`summary-text ${totalChange < 0 ? 'positive' : 'negative'}`}>
+                                {totalChange < 0 ? '🎉' : '💪'} 
+                                累计 {totalChange < 0 ? '减' : '增'} {Math.abs(totalChange).toFixed(1)}kg
+                            </span>
+                        </div>
+                    )}
+                    <div className="chart-container">
+                        <ResponsiveContainer width="100%" height={300}>
+                            <LineChart data={chartData}>
+                                <CartesianGrid strokeDasharray="3 3" />
+                                <XAxis dataKey="date" tick={{ fontSize: 12 }} />
+                                <YAxis 
+                                    domain={['dataMin - 2', 'dataMax + 2']}
+                                    tick={{ fontSize: 12 }}
+                                    label={{ value: '体重 (kg)', angle: -90, position: 'insideLeft' }}
+                                />
+                                <Tooltip 
+                                    formatter={(value) => [`${value} kg`, '体重']}
+                                    labelFormatter={(label) => {
+                                        const entry = chartData.find(d => d.date === label);
+                                        return entry ? formatDate(entry.fullDate) : label;
+                                    }}
+                                />
+                                <Line 
+                                    type="monotone" 
+                                    dataKey="weight" 
+                                    stroke="#8884d8" 
+                                    strokeWidth={2}
+                                    dot={{ fill: '#8884d8', r: 4 }}
+                                    activeDot={{ r: 6 }}
+                                />
+                            </LineChart>
+                        </ResponsiveContainer>
+                    </div>
+                </div>
+            );
+        }
+
+        // 主应用组件
+        function App() {
+            const [currentUser, setCurrentUser] = useState('me');
+            const [entries, setEntries] = useState([]);
+            const [profiles] = useState(storage.getUserProfiles());
+
+            useEffect(() => {
+                loadData();
+            }, []);
+
+            const loadData = () => {
+                setEntries(storage.getWeightEntries());
+            };
+
+            const handleAddEntry = (entry) => {
+                storage.saveWeightEntry(entry);
+                loadData();
+            };
+
+            const handleDeleteEntry = (id) => {
+                storage.deleteWeightEntry(id);
+                loadData();
+            };
+
+            const currentUserProfile = profiles.find(p => p.id === currentUser);
+            const userEntries = entries.filter(e => e.userId === currentUser);
+            const sortedEntries = [...userEntries].sort((a, b) => 
+                new Date(b.date).getTime() - new Date(a.date).getTime()
+            );
+
+            return (
+                <div className="app">
+                    <header className="app-header">
+                        <h1>💪 减肥日志</h1>
+                        <p className="subtitle">记录我们的减肥之旅</p>
+                    </header>
+
+                    <div className="app-content">
+                        <UserSwitcher
+                            currentUser={currentUser}
+                            profiles={profiles}
+                            onUserChange={setCurrentUser}
+                        />
+
+                        <div className="main-section">
+                            <div className="left-panel">
+                                <WeightForm
+                                    currentUser={currentUser}
+                                    userName={currentUserProfile?.name || ''}
+                                    onAdd={handleAddEntry}
+                                />
+                                <WeightHistory
+                                    entries={sortedEntries}
+                                    onDelete={handleDeleteEntry}
+                                />
+                            </div>
+
+                            <div className="right-panel">
+                                <WeightChart entries={userEntries} />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            );
+        }
+
+        // 渲染应用
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
+    </script>
+</body>
+</html>

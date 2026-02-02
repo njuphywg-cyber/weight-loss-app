@@ -1,0 +1,196 @@
+.weekly-recap-container {
+  padding: 20px;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.recap-loading {
+  text-align: center;
+  padding: 60px 20px;
+  color: #666;
+}
+
+.loading-spinner {
+  font-size: 48px;
+  margin-bottom: 20px;
+  animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.recap-empty {
+  text-align: center;
+  padding: 60px 20px;
+  color: #666;
+}
+
+.generate-btn {
+  margin-top: 20px;
+  padding: 12px 24px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.generate-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+}
+
+.recap-card {
+  background: white;
+  border-radius: 15px;
+  padding: 25px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.recap-header {
+  text-align: center;
+  margin-bottom: 30px;
+  padding-bottom: 20px;
+  border-bottom: 2px solid #f0f0f0;
+}
+
+.recap-header h2 {
+  margin: 0 0 10px 0;
+  font-size: 24px;
+  color: #333;
+}
+
+.recap-date-range {
+  margin: 0;
+  font-size: 14px;
+  color: #666;
+}
+
+.recap-content {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+}
+
+.recap-highlight {
+  display: flex;
+  align-items: flex-start;
+  gap: 15px;
+  padding: 20px;
+  background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
+  border-radius: 12px;
+}
+
+.highlight-icon {
+  font-size: 32px;
+}
+
+.highlight-text {
+  flex: 1;
+  font-size: 18px;
+  font-weight: 600;
+  color: #333;
+  line-height: 1.6;
+}
+
+.recap-progress {
+  padding: 20px;
+  background: #f5f7fa;
+  border-radius: 12px;
+}
+
+.recap-progress h3 {
+  margin: 0 0 15px 0;
+  font-size: 18px;
+  color: #333;
+}
+
+.progress-list {
+  margin: 0;
+  padding-left: 20px;
+  list-style: none;
+}
+
+.progress-list li {
+  padding: 8px 0;
+  font-size: 14px;
+  color: #666;
+  position: relative;
+  padding-left: 25px;
+}
+
+.progress-list li::before {
+  content: '✓';
+  position: absolute;
+  left: 0;
+  color: #667eea;
+  font-weight: 600;
+}
+
+.recap-couple {
+  display: flex;
+  align-items: flex-start;
+  gap: 15px;
+  padding: 20px;
+  background: linear-gradient(135deg, rgba(240, 147, 251, 0.1) 0%, rgba(245, 87, 108, 0.1) 100%);
+  border-radius: 12px;
+}
+
+.couple-icon {
+  font-size: 32px;
+}
+
+.couple-text {
+  flex: 1;
+  font-size: 16px;
+  color: #333;
+  line-height: 1.6;
+}
+
+.recap-goal {
+  padding: 20px;
+  background: #fff3cd;
+  border-radius: 12px;
+}
+
+.recap-goal h3 {
+  margin: 0 0 10px 0;
+  font-size: 18px;
+  color: #856404;
+}
+
+.goal-text {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 600;
+  color: #856404;
+}
+
+.recap-actions {
+  margin-top: 25px;
+  text-align: center;
+}
+
+.regenerate-btn {
+  padding: 10px 20px;
+  background: #f0f0f0;
+  color: #666;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.regenerate-btn:hover {
+  background: #e0e0e0;
+}
