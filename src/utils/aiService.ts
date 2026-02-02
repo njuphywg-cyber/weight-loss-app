@@ -3,9 +3,6 @@ import {
   AIStateClassification,
   EmpathyFeedback,
   CheerType,
-  ExerciseType,
-  DietType,
-  SleepQuality,
   MoodType,
 } from '../types'
 
@@ -121,6 +118,7 @@ const FEEDBACK_TEMPLATES = {
 
 // 节点1：状态识别/分类
 export function classifyCheckInState(entry: CheckInEntry, history: CheckInEntry[]): AIStateClassification {
+  void history
   // 规则优先的分类逻辑
   let effortLevel: 'high' | 'mid' | 'low' = 'mid'
   let moodState: 'positive' | 'neutral' | 'low' | 'anxious' | 'irritable' = 'neutral'
@@ -194,6 +192,7 @@ export function generateEmpathyFeedback(
   entry: CheckInEntry,
   aiState: AIStateClassification
 ): EmpathyFeedback {
+  void entry
   // 80%使用模板，20%可以调用LLM（这里简化处理，都用模板）
   const tone = aiState.recommendedTone
   let templateKey = `${aiState.effortLevel}_effort` as keyof typeof FEEDBACK_TEMPLATES
@@ -229,6 +228,7 @@ export function recommendCheerType(
   partnerCheckedIn: boolean,
   partnerMood?: MoodType
 ): CheerType {
+  void partnerMood
   // 规则优先的推荐逻辑
   if (currentUserState.moodState === 'low' || currentUserState.moodState === 'anxious') {
     return 'hug'
@@ -247,7 +247,7 @@ export function generateCheerContent(
   type: CheerType,
   style: 'cute' | 'calm' | 'funny' | 'serious' = 'cute'
 ): string {
-  const contents = {
+  const contents: Record<CheerType, Record<EmpathyFeedback['styleTag'], string>> = {
     praise: {
       cute: '今天超棒的！继续加油💪',
       calm: '做得很好，继续保持',
@@ -277,6 +277,8 @@ export function predictChurnRisk(
   checkIns: CheckInEntry[],
   lastCheckInDate?: string
 ): { riskScore: number; riskBucket: 'low' | 'mid' | 'high'; interventionType: 'none' | 'gentle_ping' | 'invite_partner' } {
+  void userId
+  void checkIns
   if (!lastCheckInDate) {
     return { riskScore: 0.5, riskBucket: 'mid', interventionType: 'gentle_ping' }
   }
@@ -302,6 +304,9 @@ export function generateWeeklyRecap(
   weekStart: string,
   weekEnd: string
 ): { highlight: string; progress: string[]; nextWeekMicroGoal: string } {
+  void userId
+  void weekStart
+  void weekEnd
   const checkInCount = weekCheckIns.length
   const exerciseDays = weekCheckIns.filter(c => c.exercises && c.exercises.length > 0).length
   const goodMoodDays = weekCheckIns.filter(c => c.mood === 'happy' || c.mood === 'excited').length

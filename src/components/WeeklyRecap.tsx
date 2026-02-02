@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
-import { format, startOfWeek, endOfWeek, subWeeks } from 'date-fns'
-import { WeeklyRecap as WeeklyRecapType, CheckInEntry } from '../types'
+import { format, startOfWeek, endOfWeek } from 'date-fns'
+import { WeeklyRecap as WeeklyRecapType } from '../types'
 import { storage } from '../utils/storage'
 import { generateWeeklyRecap } from '../utils/aiService'
 import './WeeklyRecap.css'

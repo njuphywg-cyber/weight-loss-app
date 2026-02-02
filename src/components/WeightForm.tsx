@@ -5,11 +5,10 @@ import './WeightForm.css'
 
 interface WeightFormProps {
   currentUser: User
-  userName: string
   onAdd: (entry: Omit<WeightEntry, 'id'>) => void
 }
 
-export default function WeightForm({ currentUser, userName, onAdd }: WeightFormProps) {
+export default function WeightForm({ currentUser, onAdd }: WeightFormProps) {
   const [weight, setWeight] = useState('')
   const [date, setDate] = useState(format(new Date(), 'yyyy-MM-dd'))
   const [note, setNote] = useState('')

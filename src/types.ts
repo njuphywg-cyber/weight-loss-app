@@ -1,5 +1,5 @@
 // 用户相关
-export type User = 'me' | 'partner'
+export type User = string
 
 export interface UserProfile {
   id: string
