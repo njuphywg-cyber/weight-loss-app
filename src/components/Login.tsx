@@ -1,5 +1,4 @@
 import { useState } from 'react'
-import { UserProfile } from '../types'
 import { storage } from '../utils/storage'
 import './Login.css'
 

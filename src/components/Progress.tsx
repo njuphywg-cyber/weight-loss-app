@@ -1,6 +1,5 @@
 import { useState, useMemo } from 'react'
 import { format, subDays, parseISO } from 'date-fns'
-import { CheckInEntry, WeightEntry, Milestone } from '../types'
 import { storage } from '../utils/storage'
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts'
 import './Progress.css'

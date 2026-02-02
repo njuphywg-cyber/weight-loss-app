@@ -1,14 +1,13 @@
 import { CheckInEntry, User } from '../types'
-import { format, differenceInDays, startOfToday, parseISO, isSameDay } from 'date-fns'
+import { startOfToday, parseISO, isSameDay } from 'date-fns'
 import './CheckInStats.css'
 
 interface CheckInStatsProps {
   entries: CheckInEntry[]
   userId: User
-  userName: string
 }
 
-export default function CheckInStats({ entries, userId, userName }: CheckInStatsProps) {
+export default function CheckInStats({ entries, userId }: CheckInStatsProps) {
   const userEntries = entries.filter(e => e.userId === userId)
   
   // 计算连续打卡天数

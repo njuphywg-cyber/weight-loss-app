@@ -7,11 +7,10 @@ import './SimpleCheckIn.css'
 
 interface SimpleCheckInProps {
   userId: string
-  userName: string
   onCheckInComplete: () => void
 }
 
-export default function SimpleCheckIn({ userId, userName, onCheckInComplete }: SimpleCheckInProps) {
+export default function SimpleCheckIn({ userId, onCheckInComplete }: SimpleCheckInProps) {
   const today = format(new Date(), 'yyyy-MM-dd')
   const [selectedDate, setSelectedDate] = useState(today)
   const [existingCheckIn, setExistingCheckIn] = useState<CheckInEntry | undefined>(
@@ -35,7 +34,6 @@ export default function SimpleCheckIn({ userId, userName, onCheckInComplete }: S
   const [weight, setWeight] = useState(existingCheckIn?.weight || undefined)
   const [showFeedback, setShowFeedback] = useState(false)
   const [feedbackCard, setFeedbackCard] = useState<EmpathyFeedback | null>(null)
-  const [showCheer, setShowCheer] = useState(false)
 
   // 当选择的日期改变时，更新表单数据
   useEffect(() => {
@@ -172,7 +170,6 @@ export default function SimpleCheckIn({ userId, userName, onCheckInComplete }: S
 
     storage.saveCheerCard(cheerCard)
     alert(`已发送${cheerType === 'praise' ? '夸夸' : cheerType === 'hug' ? '抱抱' : '小任务'}给${partnerProfile?.name || '伴侣'}`)
-    setShowCheer(false)
     onCheckInComplete()
   }
 

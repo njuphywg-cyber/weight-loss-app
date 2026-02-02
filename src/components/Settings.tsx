@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { ReminderSettings, PrivacySettings, UserProfile, CoupleBinding } from '../types'
+import { ReminderSettings, PrivacySettings, UserProfile } from '../types'
 import { storage } from '../utils/storage'
 import './Settings.css'
 

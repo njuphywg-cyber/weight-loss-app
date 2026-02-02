@@ -108,7 +108,6 @@ function App() {
           {currentPage === 'checkin' && (
             <SimpleCheckIn
               userId={userId}
-              userName={userProfile.name}
               onCheckInComplete={handleCheckInComplete}
             />
           )}

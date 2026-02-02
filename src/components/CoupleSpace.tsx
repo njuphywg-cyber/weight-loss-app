@@ -229,7 +229,6 @@ export default function CoupleSpace({ userId }: CoupleSpaceProps) {
           <div className="cheer-list">
             {cheerCards.map(card => {
               const fromUser = storage.getUserProfile(card.fromUserId)
-              const toUser = storage.getUserProfile(card.toUserId)
               const isFromMe = card.fromUserId === userId
               
               return (

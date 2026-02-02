@@ -1,5 +1,5 @@
 import { CheckInEntry, User } from '../types'
-import { format, startOfMonth, endOfMonth, eachDayOfInterval, isSameMonth, isToday, parseISO, isSameDay } from 'date-fns'
+import { format, startOfMonth, endOfMonth, eachDayOfInterval, isToday, parseISO, isSameDay } from 'date-fns'
 import './CheckInCalendar.css'
 
 interface CheckInCalendarProps {
