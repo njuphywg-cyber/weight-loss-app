@@ -204,8 +204,11 @@ export function generateEmpathyFeedback(
     templateKey = 'low_mood' as keyof typeof FEEDBACK_TEMPLATES
   }
 
-  const templates = FEEDBACK_TEMPLATES[templateKey]
-  const template = templates?.[tone] || templates?.calm || {
+  const templates = FEEDBACK_TEMPLATES[templateKey] as Record<
+    EmpathyFeedback['styleTag'],
+    { title: string; empathyLine: string; achievementLine: string; microAction?: string }
+  >
+  const template = templates[tone] || templates.calm || {
     title: '今天辛苦了',
     empathyLine: '坚持本身就是一种胜利',
     achievementLine: '你做得很好',
